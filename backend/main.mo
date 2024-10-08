@@ -6,24 +6,30 @@ import Array "mo:base/Array";
 import Iter "mo:base/Iter";
 
 actor {
-  func extractValues(json : Text) : (Text, Text) {
+  func extractValues(json : Text) : (Text, Text, Text) {
     let chars = Iter.toArray(json.chars());
     var i = 0;
     var textValue = "";
     var yearValue = "";
+    var pageValue = "";
 
-    while (i < chars.size()) {
+    label searchKeys while (i < chars.size()) {
       if (i + 6 < chars.size()) {
         if (chars[i] == '\"' and chars[i+1] == 't' and chars[i+2] == 'e' and chars[i+3] == 'x' and chars[i+4] == 't' and chars[i+5] == '\"' and chars[i+6] == ':' and textValue == "") {
           textValue := extractQuotedValue(chars, i + 7);
         } else if (chars[i] == '\"' and chars[i+1] == 'y' and chars[i+2] == 'e' and chars[i+3] == 'a' and chars[i+4] == 'r' and chars[i+5] == '\"' and chars[i+6] == ':' and yearValue == "") {
           yearValue := extractNumericValue(chars, i + 7);
+        } else if (chars[i] == '\"' and chars[i+1] == 'p' and chars[i+2] == 'a' and chars[i+3] == 'g' and chars[i+4] == 'e' and chars[i+5] == '\"' and chars[i+6] == ':' and pageValue == "") {
+          pageValue := extractQuotedValue(chars, i + 7);
         };
+      };
+      if (textValue != "" and yearValue != "" and pageValue != "") {
+        break searchKeys;
       };
       i += 1;
     };
 
-    (textValue, yearValue)
+    (textValue, yearValue, pageValue)
   };
 
   func extractQuotedValue(chars : [Char], startIndex : Nat) : Text {
@@ -59,7 +65,7 @@ actor {
     ""
   };
 
-  public query func getSelectedValues(jsonString : Text) : async (Text, Text) {
+  public query func getSelectedValues(jsonString : Text) : async (Text, Text, Text) {
     extractValues(jsonString)
   };
 }
