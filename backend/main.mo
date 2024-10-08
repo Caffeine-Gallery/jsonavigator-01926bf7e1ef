@@ -13,11 +13,11 @@ actor {
     var yearValue = "";
 
     while (i < chars.size()) {
-      if (i + 3 < chars.size()) {
-        if (chars[i] == 't' and chars[i+1] == 'e' and chars[i+2] == 'x' and chars[i+3] == 't' and textValue == "") {
-          textValue := extractValue(chars, i);
-        } else if (chars[i] == 'y' and chars[i+1] == 'e' and chars[i+2] == 'a' and chars[i+3] == 'r' and yearValue == "") {
-          yearValue := extractValue(chars, i);
+      if (i + 6 < chars.size()) {
+        if (chars[i] == '\"' and chars[i+1] == 't' and chars[i+2] == 'e' and chars[i+3] == 'x' and chars[i+4] == 't' and chars[i+5] == '\"' and chars[i+6] == ':' and textValue == "") {
+          textValue := extractQuotedValue(chars, i + 7);
+        } else if (chars[i] == '\"' and chars[i+1] == 'y' and chars[i+2] == 'e' and chars[i+3] == 'a' and chars[i+4] == 'r' and chars[i+5] == '\"' and chars[i+6] == ':' and yearValue == "") {
+          yearValue := extractQuotedValue(chars, i + 7);
         };
       };
       i += 1;
@@ -26,12 +26,8 @@ actor {
     (textValue, yearValue)
   };
 
-  func extractValue(chars : [Char], startIndex : Nat) : Text {
+  func extractQuotedValue(chars : [Char], startIndex : Nat) : Text {
     var i = startIndex;
-    while (i < chars.size() and chars[i] != ':') {
-      i += 1;
-    };
-    i += 1;
     while (i < chars.size() and Char.isWhitespace(chars[i])) {
       i += 1;
     };
@@ -41,7 +37,9 @@ actor {
       while (i < chars.size() and chars[i] != '\"') {
         i += 1;
       };
-      return Text.fromIter(Iter.fromArray(Array.subArray(chars, valueStart, i - valueStart)));
+      if (i < chars.size()) {
+        return Text.fromIter(Iter.fromArray(Array.subArray(chars, valueStart, i - valueStart)));
+      };
     };
     ""
   };
