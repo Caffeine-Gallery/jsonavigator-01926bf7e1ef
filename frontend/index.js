@@ -1,16 +1,19 @@
 import { backend } from 'declarations/backend';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const fetchButton = document.getElementById('fetchButton');
-  const resultDiv = document.getElementById('result');
-
-  fetchButton.addEventListener('click', async () => {
-    try {
-      resultDiv.textContent = 'Fetching...';
-      const selectedText = await backend.getSelectedText();
-      resultDiv.textContent = selectedText;
-    } catch (error) {
-      resultDiv.textContent = `Error: ${error.message}`;
+document.getElementById('jsonForm').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const jsonString = document.getElementById('jsonInput').value;
+    
+    if (!jsonString.trim()) {
+        alert('Please enter a JSON string');
+        return;
     }
-  });
+
+    try {
+        const result = await backend.getSelectedText(jsonString);
+        document.getElementById('result').textContent = `Extracted Text: ${result}`;
+    } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('result').textContent = 'An error occurred while processing the JSON.';
+    }
 });

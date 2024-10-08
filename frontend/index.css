@@ -18,27 +18,34 @@ h1 {
     text-align: center;
 }
 
+form {
+    background: #fff;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
 button {
     display: block;
-    width: 200px;
-    margin: 20px auto;
+    width: 100%;
     padding: 10px;
-    background-color: #4CAF50;
-    color: white;
+    background: #333;
+    color: #fff;
     border: none;
     cursor: pointer;
-    font-size: 16px;
 }
 
 button:hover {
-    background-color: #45a049;
+    background: #555;
 }
 
 #result {
-    background-color: white;
-    border: 1px solid #ddd;
+    background: #fff;
     padding: 20px;
     margin-top: 20px;
-    border-radius: 5px;
-    min-height: 100px;
 }
