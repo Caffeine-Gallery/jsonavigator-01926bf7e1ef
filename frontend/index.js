@@ -10,10 +10,12 @@ document.getElementById('jsonForm').addEventListener('submit', async (e) => {
     }
 
     try {
-        const result = await backend.getSelectedText(jsonString);
-        document.getElementById('result').textContent = `Extracted Text: ${result}`;
+        const [textValue, yearValue] = await backend.getSelectedValues(jsonString);
+        document.getElementById('textResult').textContent = `Extracted Text: ${textValue || 'Not found'}`;
+        document.getElementById('yearResult').textContent = `Extracted Year: ${yearValue || 'Not found'}`;
     } catch (error) {
         console.error('Error:', error);
-        document.getElementById('result').textContent = 'An error occurred while processing the JSON.';
+        document.getElementById('textResult').textContent = 'An error occurred while processing the JSON.';
+        document.getElementById('yearResult').textContent = '';
     }
 });

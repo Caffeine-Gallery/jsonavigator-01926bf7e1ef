@@ -49,3 +49,7 @@ button:hover {
     padding: 20px;
     margin-top: 20px;
 }
+
+#textResult, #yearResult {
+    margin: 10px 0;
+}

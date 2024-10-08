@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>JSON Text Extractor</title>
+    <title>JSON Value Extractor</title>
     <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <div class="container">
-        <h1>JSON Text Extractor</h1>
+        <h1>JSON Value Extractor</h1>
         <form id="jsonForm">
             <textarea id="jsonInput" rows="10" placeholder="Enter your JSON string here..."></textarea>
-            <button type="submit">Extract Text</button>
+            <button type="submit">Extract Values</button>
         </form>
-        <div id="result"></div>
+        <div id="result">
+            <p id="textResult"></p>
+            <p id="yearResult"></p>
+        </div>
     </div>
     <script type="module" src="index.js"></script>
 </body>
